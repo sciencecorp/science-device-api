@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package synapse;
+package science;
 
 message UpdatePackagesRequest {
     repeated PackageSpec packages = 1;
