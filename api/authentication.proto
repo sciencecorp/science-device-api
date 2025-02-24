@@ -21,6 +21,7 @@ message UserKey {
     string public_key = 2;
 
     // Only stored on device - not transmitted
+    // Left here though for serialized keys and storage on the device
     string private_key = 3;
 
     // Unix timestamp, nanoseconds
@@ -33,11 +34,8 @@ message UserKey {
 }
 
 message DeviceAuthenticationResponse {
-    bool success = 1;
-    string message = 2;
-
     // Only valid if success is true. Private key will not be filled
-    UserKey key = 3;
+    UserKey key = 1;
 }
 
 message RevokeKeyRequest {
@@ -45,8 +43,7 @@ message RevokeKeyRequest {
 }
 
 message RevokeKeyResponse {
-    bool success = 1;
-    string message = 2;
+    string key_id = 1;
 }
 
 message ListKeysRequest {
