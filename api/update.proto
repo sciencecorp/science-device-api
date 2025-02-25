@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package science;
 
-import "google/protobuf/empty.proto";
-
 message UpdatePackagesRequest {
     repeated PackageSpec packages = 1;
 }
@@ -55,6 +53,10 @@ message PackageInfo {
     string latest_version = 3;
 }
 
+message ListPackageRequest {
+    // Empty for now
+}
+
 message ListPackagesResponse {
     repeated PackageInfo packages = 1;
 }
@@ -62,5 +64,5 @@ message ListPackagesResponse {
 service SynapseUpdate {
     rpc UpdatePackages(UpdatePackagesRequest) returns (UpdateResult) {}
     rpc UploadPackage(stream UpdatePackageChunk) returns (UpdateResult) {}
-    rpc ListPackages(google.protobuf.Empty) returns (ListPackagesResponse) {}
+    rpc ListPackages(ListPackageRequest) returns (ListPackagesResponse) {}
 }
