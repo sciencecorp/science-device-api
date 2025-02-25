@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package science;
 
+import "google/protobuf/empty.proto";
+
 message UpdatePackagesRequest {
     repeated PackageSpec packages = 1;
 }
@@ -47,8 +49,18 @@ message PackageMetadata {
     string sha256_sum = 4;
 }
 
+message PackageInfo {
+    string name = 1;
+    string installed_version = 2;
+    string latest_version = 3;
+}
+
+message ListPackagesResponse {
+    repeated PackageInfo packages = 1;
+}
+
 service SynapseUpdate {
     rpc UpdatePackages(UpdatePackagesRequest) returns (UpdateResult) {}
-    
     rpc UploadPackage(stream UpdatePackageChunk) returns (UpdateResult) {}
+    rpc ListPackages(google.protobuf.Empty) returns (ListPackagesResponse) {}
 }
