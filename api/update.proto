@@ -64,5 +64,5 @@ message ListPackagesResponse {
 service SynapseUpdate {
     rpc UpdatePackages(UpdatePackagesRequest) returns (UpdateResult) {}
     rpc UploadPackage(stream UpdatePackageChunk) returns (UpdateResult) {}
-    rpc ListPackages(ListPackageRequest) returns (ListPackagesResponse) {}
+    rpc ListPackages(ListPackagesRequest) returns (ListPackagesResponse) {}
 }
