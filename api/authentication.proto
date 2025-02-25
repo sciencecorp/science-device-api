@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package science;
+
+message OAuthCredentials {
+    string token = 1;
+    string auth_server_url = 2;
+}
+
+message DeviceAuthenticationRequest {
+    string user_email = 1;
+    string organization_id = 2;
+    
+    oneof auth_method {
+        OAuthCredentials oauth = 3;
+    }
+}
+
+message UserKey {
+    string key_id = 1;
+    string public_key = 2;
+
+    // Only stored on device - not transmitted
+    // Left here though for serialized keys and storage on the device
+    string private_key = 3;
+
+    // Unix timestamp, nanoseconds
+    uint64 creation_time_ns = 4;
+
+    string user_email = 5;
+    string device_serial = 6;
+    string organization_id = 7;
+    string auth_method = 8;
+}
+
+message DeviceAuthenticationResponse {
+    // Only valid if success is true. Private key will not be filled
+    UserKey key = 1;
+}
+
+message RevokeKeyRequest {
+    string key_id = 1;
+}
+
+message RevokeKeyResponse {
+    string key_id = 1;
+}
+
+message ListKeysRequest {
+    // Optional, if empty will list all of the stored keys on the device
+    string user_email = 1;
+}
+
+message ListKeysResponse {
+    repeated UserKey keys = 1;
+}
+
+service DeviceAuthService {
+    // Authenticate with specified credentials, generates RSA key, returns the public key
+    rpc AuthenticateDevice(DeviceAuthenticationRequest) returns (DeviceAuthenticationResponse);
+
+    // Removes a previously generated key
+    rpc RevokeKey(RevokeKeyRequest) returns (RevokeKeyResponse);
+
+    // List all keys stored on the device or for a specific user
+    rpc ListKeys(ListKeysRequest) returns (ListKeysResponse);
+}
