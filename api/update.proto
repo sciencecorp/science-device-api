@@ -53,7 +53,7 @@ message PackageInfo {
     string latest_version = 3;
 }
 
-message ListPackageRequest {
+message ListPackagesRequest {
     // Empty for now
 }
 
