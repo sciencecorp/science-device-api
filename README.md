@@ -1,2 +1,2 @@
-# science-api-internal
-Protobuf definitions for internal services for Science
+# science-device-api
+Protobuf definitions for device related services at Science. 
